@@ -7,13 +7,16 @@ import DiscoveryPage from '../pages/DiscoveryPage';
 import ListeningHistoryPage from '../pages/ListeningHistoryPage';
 import ProfilePage from '../pages/songs/ProfilePage';
 import SongPage from '../pages/songs/SongPage';
+import RootLayout from '../layouts/RootLayout';
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<TrendingPage />} />
-
       <Route path="/discovery" element={<DiscoveryPage />}></Route>
+
+      <Route element={<RootLayout />}>
+        <Route path="/" element={<TrendingPage />} />
+      </Route>
 
       <Route
         path="/listening-history"

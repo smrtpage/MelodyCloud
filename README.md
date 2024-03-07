@@ -1,4 +1,4 @@
-# React template
+# Melody Cloud
 
 ## Requirements
 
