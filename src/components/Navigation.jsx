@@ -1,12 +1,4 @@
-import {
-  Box,
-  Image,
-  Flex,
-  Text,
-  Button,
-  Heading,
-  Stack,
-} from '@chakra-ui/react';
+import { Box, Image, Flex, Text, Heading, Stack } from '@chakra-ui/react';
 import Logo from '../assets/LogoMusicCloud.svg';
 import { PiScreencastBold } from 'react-icons/pi';
 import { FiCompass } from 'react-icons/fi';
