@@ -7,7 +7,7 @@ import {
   Heading,
   Stack,
 } from '@chakra-ui/react';
-import Logo from '../assets/LogoMusicCloud.png';
+import Logo from '../assets/LogoMusicCloud.svg';
 import { PiScreencastBold } from 'react-icons/pi';
 import { FiCompass } from 'react-icons/fi';
 import { GoHome } from 'react-icons/go';
@@ -16,14 +16,14 @@ function Navigation() {
   return (
     <div>
       <Box>
-        <Flex alignItems="center" justifyContent="space-around">
-          <Image src={Logo} boxSize="40px" />
+        <Flex alignItems="center" justifyContent="space-evenly">
+          <Image src={Logo} BoxSize={6} />
           <Heading as="h5" size="lg">
             MelodyCloud
           </Heading>
         </Flex>
 
-        <Stack marginStart="25px" marginTop="50px" marginBottom="50px">
+        <Stack marginStart="25px" marginTop="40px" marginBottom="50px">
           <Flex direction="column">
             <Button
               variant="ghost"
@@ -32,7 +32,7 @@ function Navigation() {
               height="60px"
               _hover={{
                 color: 'yellow',
-                backgroundColor: 'gray.100',
+                backgroundColor: '#2B2B2B',
                 transition: '0.5s ',
               }}
             >
@@ -48,7 +48,7 @@ function Navigation() {
               height="60px"
               _hover={{
                 color: 'yellow',
-                backgroundColor: 'gray.100',
+                backgroundColor: '#2B2B2B',
                 transition: '0.5s ',
               }}
             >
@@ -64,7 +64,7 @@ function Navigation() {
               height="60px"
               _hover={{
                 color: 'yellow',
-                backgroundColor: 'gray.100',
+                backgroundColor: '#2B2B2B',
                 transition: '0.5s ',
               }}
             >
