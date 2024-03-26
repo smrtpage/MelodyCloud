@@ -7,7 +7,7 @@ function SidebarFavorites() {
       <Stack
         padding="15px 10px"
         borderRadius="5px"
-        backgroundColor="#0008"
+        backgroundColor="#2B2B2B"
         rowGap="20px"
         display="flex"
         flexDirection="column"

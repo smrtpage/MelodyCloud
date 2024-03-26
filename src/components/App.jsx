@@ -29,6 +29,8 @@ function App() {
 
       <Route path="/register" element={<RegisterPage />}></Route>
       <Route path="/login" element={<LoginPage />}></Route>
+
+      <Route path="/song" element={<SongPage />}></Route>
     </Routes>
   );
 }
