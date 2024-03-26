@@ -23,7 +23,9 @@ function App() {
         element={<ListeningHistoryPage />}
       ></Route>
 
-      <Route path="/users/:userId" element={<ProfilePage />}></Route>
+      <Route element={<RootLayout />}>
+        <Route path="/users/:userId" element={<ProfilePage />}></Route>
+      </Route>
 
       <Route path="/songs/:songId" element={<SongPage />}></Route>
 
