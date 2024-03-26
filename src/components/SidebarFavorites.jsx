@@ -21,11 +21,13 @@ function SidebarFavorites() {
           justifyContent="space-between"
           alignItems="center"
         >
-          <Heading color="white" fontSize="30px" fontWeight="600">
+          <Heading color="white" fontSize="25px" fontWeight="600">
             My Favorites
           </Heading>
 
-          <Text color="#D6D10F">See All</Text>
+          <Button variant="ghost" color="#D6D10F">
+            See All
+          </Button>
         </Stack>
 
         <Flex
