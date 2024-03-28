@@ -27,12 +27,12 @@ function App() {
         <Route path="/users/:userId" element={<ProfilePage />}></Route>
       </Route>
 
-      <Route path="/songs/:songId" element={<SongPage />}></Route>
+      <Route element={<RootLayout />}>
+        <Route path="/songs/:songId" element={<SongPage />}></Route>
+      </Route>
 
       <Route path="/register" element={<RegisterPage />}></Route>
       <Route path="/login" element={<LoginPage />}></Route>
-
-      <Route path="/song" element={<SongPage />}></Route>
     </Routes>
   );
 }
