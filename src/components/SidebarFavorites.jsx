@@ -7,7 +7,7 @@ function SidebarFavorites() {
       <Stack
         padding="15px 10px"
         borderRadius="5px"
-        backgroundColor="#2B2B2B"
+        // backgroundColor="#2B2B2B"
         rowGap="20px"
         display="flex"
         flexDirection="column"
@@ -21,13 +21,11 @@ function SidebarFavorites() {
           justifyContent="space-between"
           alignItems="center"
         >
-          <Heading color="white" fontSize="25px" fontWeight="600">
+          <Heading fontSize="25px" fontWeight="600">
             My Favorites
           </Heading>
 
-          <Button variant="ghost" color="#D6D10F">
-            See All
-          </Button>
+          <Button variant="ghost">See All</Button>
         </Stack>
 
         <Flex
@@ -45,16 +43,14 @@ function SidebarFavorites() {
             ></Stack>
 
             <Flex flexDirection="column" alignItems="flex-start">
-              <Text color="white" fontWeight="600">
-                Dead Eyes
-              </Text>
-              <Text color="white" fontSize="14px" fontWeight="400">
+              <Text fontWeight="600">Dead Eyes</Text>
+              <Text fontSize="14px" fontWeight="400">
                 Promoting Sounds...
               </Text>
             </Flex>
 
             <Button variant="ghost">
-              <BsThreeDotsVertical fontSize="25px" color="white" />
+              <BsThreeDotsVertical fontSize="25px" />
             </Button>
           </Flex>
 
@@ -67,16 +63,14 @@ function SidebarFavorites() {
             ></Stack>
 
             <Flex flexDirection="column" alignItems="flex-start">
-              <Text color="white" fontWeight="600">
-                Wish I Was Better
-              </Text>
-              <Text color="white" fontSize="14px" fontWeight="400">
+              <Text fontWeight="600">Wish I Was Better</Text>
+              <Text fontSize="14px" fontWeight="400">
                 Promoting Sounds...
               </Text>
             </Flex>
 
             <Button variant="ghost">
-              <BsThreeDotsVertical fontSize="25px" color="white" />
+              <BsThreeDotsVertical fontSize="25px" />
             </Button>
           </Flex>
 
@@ -89,16 +83,14 @@ function SidebarFavorites() {
             ></Stack>
 
             <Flex flexDirection="column" alignItems="flex-start">
-              <Text color="white" fontWeight="600">
-                Dead Eyes
-              </Text>
-              <Text color="white" fontSize="14px" fontWeight="400">
+              <Text fontWeight="600">Dead Eyes</Text>
+              <Text fontSize="14px" fontWeight="400">
                 Promoting Sounds...
               </Text>
             </Flex>
 
             <Button variant="ghost">
-              <BsThreeDotsVertical fontSize="25px" color="white" />
+              <BsThreeDotsVertical fontSize="25px" />
             </Button>
           </Flex>
 
@@ -111,16 +103,14 @@ function SidebarFavorites() {
             ></Stack>
 
             <Flex flexDirection="column" alignItems="flex-start">
-              <Text color="white" fontWeight="600">
-                Dead Eyes
-              </Text>
-              <Text color="white" fontSize="14px" fontWeight="400">
+              <Text fontWeight="600">Dead Eyes</Text>
+              <Text fontSize="14px" fontWeight="400">
                 Promoting Sounds...
               </Text>
             </Flex>
 
             <Button variant="ghost">
-              <BsThreeDotsVertical fontSize="25px" color="white" />
+              <BsThreeDotsVertical fontSize="25px" />
             </Button>
           </Flex>
 
@@ -133,16 +123,14 @@ function SidebarFavorites() {
             ></Stack>
 
             <Flex flexDirection="column" alignItems="flex-start">
-              <Text color="white" fontWeight="600">
-                Dead Eyes
-              </Text>
-              <Text color="white" fontSize="14px" fontWeight="400">
+              <Text fontWeight="600">Dead Eyes</Text>
+              <Text fontSize="14px" fontWeight="400">
                 Promoting Sounds...
               </Text>
             </Flex>
 
             <Button variant="ghost">
-              <BsThreeDotsVertical fontSize="25px" color="white" />
+              <BsThreeDotsVertical fontSize="25px" />
             </Button>
           </Flex>
 
@@ -155,16 +143,14 @@ function SidebarFavorites() {
             ></Stack>
 
             <Flex flexDirection="column" alignItems="flex-start">
-              <Text color="white" fontWeight="600">
-                Dead Eyes
-              </Text>
-              <Text color="white" fontSize="14px" fontWeight="400">
+              <Text fontWeight="600">Dead Eyes</Text>
+              <Text fontSize="14px" fontWeight="400">
                 Promoting Sounds...
               </Text>
             </Flex>
 
             <Button variant="ghost">
-              <BsThreeDotsVertical fontSize="25px" color="white" />
+              <BsThreeDotsVertical fontSize="25px" />
             </Button>
           </Flex>
         </Flex>

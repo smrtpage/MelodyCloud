@@ -1,6 +1,6 @@
-import { Input, Flex, Button, useColorMode, Avatar } from '@chakra-ui/react';
-import { CiSearch } from 'react-icons/ci';
+import { Flex, Button, useColorMode, Avatar } from '@chakra-ui/react';
 import { IoExitOutline } from 'react-icons/io5';
+import SearchBar from './SearchBar';
 
 import { MdOutlineDarkMode, MdOutlineLightMode } from 'react-icons/md';
 import { Link, useNavigate } from 'react-router-dom';
@@ -20,28 +20,7 @@ function Navbar() {
   return (
     <div style={{ marginBottom: '10px' }}>
       <Flex padding="0 20px" alignItems="center" justifyContent="space-between">
-        <Flex width="80%" alignItems="center">
-          <Input
-            placeholder="Discover your music here..."
-            borderRadius="30px"
-            outline="none"
-            variant="outlined"
-            border="none"
-            backgroundColor="#616161"
-            _placeholder={{ color: '#D5D5D5' }}
-            height="50px"
-            paddingLeft="50px"
-            position="relative"
-          />
-          <Button
-            textAlign="center"
-            variant="ghost"
-            _hover={{ background: 'none' }}
-            position="absolute"
-          >
-            <CiSearch fontSize="30px" fontWeight="600" />
-          </Button>
-        </Flex>
+        <SearchBar />
         <Flex gap="20px">
           <Button onClick={toggleColorMode} height="50px" variant="ghost">
             {colorMode === 'light' ? (
