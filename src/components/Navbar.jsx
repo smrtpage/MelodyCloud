@@ -16,6 +16,7 @@ function Navbar() {
     dispatch(logoutAction());
     navigate('/register');
   }
+
   const { colorMode, toggleColorMode } = useColorMode();
   return (
     <div style={{ marginBottom: '10px' }}>
@@ -52,7 +53,7 @@ function Navbar() {
           </Button>
           {user && (
             <Flex alignItems="center" gap="10px" justifyContent="center">
-              <Avatar as={Link} to={`/users/${user.id}`}></Avatar>
+              <Avatar as={Link} to={`/users/${user.id}`} />
               {user && user.username}
               <Button variant="ghost" onClick={logout}>
                 <IoExitOutline fontSize="30px" />
