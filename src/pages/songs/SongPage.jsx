@@ -14,7 +14,6 @@ import { formatSongDate } from '../../utils/formatSongDate';
 import { likeSongService } from '../../services/songsServices';
 import { FaHeart } from 'react-icons/fa';
 import { CiHeart } from 'react-icons/ci';
-import { Heading, Stack, Text, Flex, Button } from '@chakra-ui/react';
 import Navbar from '../../components/Navbar';
 // import Navigation from '../../components/Navigation';
 import { FaRegHeart } from 'react-icons/fa';
