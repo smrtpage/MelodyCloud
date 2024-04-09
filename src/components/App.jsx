@@ -8,6 +8,8 @@ import ListeningHistoryPage from '../pages/ListeningHistoryPage';
 import ProfilePage from '../pages/songs/ProfilePage';
 import SongPage from '../pages/songs/SongPage';
 import RootLayout from '../layouts/RootLayout';
+import PrivateRoute from './PrivateRoute';
+import CreateSongPage from '../pages/songs/CreateSongPage';
 
 function App() {
   return (
@@ -30,6 +32,15 @@ function App() {
       <Route element={<RootLayout />}>
         <Route path="/songs/:songId" element={<SongPage />}></Route>
       </Route>
+
+      <Route
+        path="/create-song"
+        element={
+          <PrivateRoute>
+            <CreateSongPage />
+          </PrivateRoute>
+        }
+      />
 
       <Route path="/register" element={<RegisterPage />}></Route>
       <Route path="/login" element={<LoginPage />}></Route>
