@@ -30,9 +30,9 @@ function Navigation() {
               text="Discover"
             ></NavigationButton>
             <NavigationButton
-              to="/devices"
+              to="/create-song"
               icon={<PiScreencastBold size="35px" />}
-              text="Devices"
+              text="Create"
             ></NavigationButton>
           </Flex>
 
