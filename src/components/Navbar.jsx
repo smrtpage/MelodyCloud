@@ -16,6 +16,7 @@ function Navbar({ onSearch }) {
     dispatch(logoutAction());
     navigate('/register');
   }
+
   const { colorMode, toggleColorMode } = useColorMode();
   return (
     <div style={{ marginBottom: '10px' }}>
@@ -29,15 +30,15 @@ function Navbar({ onSearch }) {
               <MdOutlineLightMode fontSize="30px" />
             )}
           </Button>
-          <Flex alignItems="center" gap="10px" justifyContent="center">
-            <Avatar as={Link} to="/"></Avatar>
-            {user && user.username}
-            {user && (
+          {user && (
+            <Flex alignItems="center" gap="10px" justifyContent="center">
+              <Avatar as={Link} to={`/users/${user.id}`} />
+              {user && user.username}
               <Button variant="ghost" onClick={logout}>
                 <IoExitOutline fontSize="30px" />
               </Button>
-            )}
-          </Flex>
+            </Flex>
+          )}
         </Flex>
       </Flex>
     </div>

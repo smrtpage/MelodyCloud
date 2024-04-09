@@ -7,3 +7,7 @@ export function registerService(data) {
 export function loginService(data) {
   return axios.post('/auth/login', data);
 }
+
+export function verifyService() {
+  return axios.post('/auth/verify');
+}
