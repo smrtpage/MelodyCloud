@@ -14,6 +14,8 @@ import { selectUser } from '../redux/authSelectors';
 import { useRef, useEffect } from 'react';
 import { loginAction, logoutAction } from '../redux/authActions';
 import { verifyService } from '../services/authServices';
+import PrivateRoute from './PrivateRoute';
+import CreateSongPage from '../pages/songs/CreateSongPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -58,6 +60,18 @@ function App() {
       <Route element={<DiscoverLayout />}>
         <Route path="/audios/:audioId" element={<SongPage />}></Route>
       </Route>
+      <Route element={<RootLayout />}>
+        <Route path="/songs/:songId" element={<SongPage />}></Route>
+      </Route>
+
+      <Route
+        path="/create-song"
+        element={
+          <PrivateRoute>
+            <CreateSongPage />
+          </PrivateRoute>
+        }
+      />
 
       <Route path="/register" element={<RegisterPage />}></Route>
       <Route path="/login" element={<LoginPage />}></Route>

@@ -13,3 +13,7 @@ export function getSongDetailsService(songId) {
 export function likeSongService(songId) {
   return axios.post(`/audios/${songId}/like`);
 }
+
+export function createSongService(data) {
+  return axios.post('/audios', data);
+}
