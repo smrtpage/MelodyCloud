@@ -1,6 +1,7 @@
 import { Input, Flex, Button } from '@chakra-ui/react';
 import { CiSearch } from 'react-icons/ci';
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 
 function SearchBar({ onSearch, defaultValue = '' }) {
   const [query, setQuery] = useState(defaultValue);
@@ -39,4 +40,8 @@ function SearchBar({ onSearch, defaultValue = '' }) {
     </div>
   );
 }
+SearchBar.propTypes = {
+  onSearch: PropTypes.any,
+  defaultValue: PropTypes.any,
+};
 export default SearchBar;

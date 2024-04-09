@@ -8,11 +8,13 @@ import ListeningHistoryPage from '../pages/ListeningHistoryPage';
 import ProfilePage from '../pages/songs/ProfilePage';
 import SongPage from '../pages/songs/SongPage';
 import RootLayout from '../layouts/RootLayout';
-
+import DiscoverLayout from '../layouts/DiscoverLayout';
 function App() {
   return (
     <Routes>
-      <Route path="/discovery" element={<DiscoveryPage />}></Route>
+      <Route element={<DiscoverLayout />}>
+        <Route path="/discovery" element={<DiscoveryPage />}></Route>
+      </Route>
 
       <Route element={<RootLayout />}>
         <Route path="/" element={<TrendingPage />} />
@@ -27,12 +29,12 @@ function App() {
         <Route path="/users/:userId" element={<ProfilePage />}></Route>
       </Route>
 
-      <Route path="/songs/:songId" element={<SongPage />}></Route>
+      <Route element={<DiscoverLayout />}>
+        <Route path="/audios/:audioId" element={<SongPage />}></Route>
+      </Route>
 
       <Route path="/register" element={<RegisterPage />}></Route>
       <Route path="/login" element={<LoginPage />}></Route>
-
-      <Route path="/song" element={<SongPage />}></Route>
     </Routes>
   );
 }

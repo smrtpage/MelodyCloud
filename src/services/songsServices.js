@@ -5,3 +5,11 @@ export function getAllSongsService(params) {
     params,
   });
 }
+
+export function getSongDetailsService(songId) {
+  return axios.get(`/audios/${songId}`);
+}
+
+export function likeSongService(songId) {
+  return axios.post(`/audios/${songId}/like`);
+}

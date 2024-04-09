@@ -1,16 +1,29 @@
-import { Stack, Heading, Text, Button, Flex } from '@chakra-ui/react';
+import { Stack, Heading, Text, Button, Flex, Spinner } from '@chakra-ui/react';
 import Navbar from '../components/Navbar';
-import { Link } from 'react-router-dom';
-import { FaRegHeart } from 'react-icons/fa';
-import { BsThreeDots } from 'react-icons/bs';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../redux/authSelectors';
+import { getAllSongsService } from '../services/songsServices';
+import { useEffect, useState } from 'react';
+import TrendingSongsList from '../components/TrendingSongsList';
 
 function TrendingPage() {
   const user = useSelector(selectUser);
+  const navigate = useNavigate();
+  const [songs, setSongs] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(true);
+    getAllSongsService()
+      .then((data) => setSongs(data.items))
+      .catch((err) => console.log(err))
+      .finally(() => setIsLoading(false));
+  }, []);
+
   return (
     <Stack>
-      <Navbar />
+      <Navbar onSearch={() => navigate('/discovery')} />
 
       {!user && (
         <Stack
@@ -159,117 +172,12 @@ function TrendingPage() {
           </Stack>
         </Flex>
       </Stack>
-      <Stack>
-        <Heading marginLeft="50px" fontSize="30px" fontWeight="600">
-          Trending Songs
-        </Heading>
-        <Stack
-          padding="30px 50px"
-          display="flex"
-          rowGap="30px"
-          flexDirection="column"
-        >
-          <Flex alignItems="center" justifyContent="space-between">
-            <Flex gap="20px" alignItems="center" justifyContent="center">
-              <Text fontSize="25px">1</Text>
-              <Stack
-                width="80px"
-                height="80px"
-                borderRadius="5px"
-                backgroundColor="#ccc"
-              />
-              <Flex flexDirection="column">
-                <Text fontSize="20px" fontWeight="600">
-                  Strangeville
-                </Text>
-                <Text fontSize="16px" color="#ccc" fontWeight="400">
-                  Tommy Vega
-                </Text>
-              </Flex>
-            </Flex>
-            <Text fontSize="19px" color="#ccc" fontWeight="400">
-              2.345.000
-            </Text>
-            <Text fontSize="19px" color="#ccc" fontWeight="400">
-              December, 20, 2022
-            </Text>
-            <Flex gap="20px">
-              <Button variant="ghost">
-                <FaRegHeart fontSize="25px" />
-              </Button>
-              <Button variant="ghost">
-                <BsThreeDots fontSize="25px" />
-              </Button>
-            </Flex>
-          </Flex>
-          <Flex alignItems="center" justifyContent="space-between">
-            <Flex gap="20px" alignItems="center" justifyContent="center">
-              <Text fontSize="25px">2</Text>
-              <Stack
-                width="80px"
-                height="80px"
-                borderRadius="5px"
-                backgroundColor="#ccc"
-              />
-              <Flex flexDirection="column">
-                <Text fontSize="20px" fontWeight="600">
-                  Strangeville
-                </Text>
-                <Text fontSize="16px" color="#ccc" fontWeight="400">
-                  Tommy Vega
-                </Text>
-              </Flex>
-            </Flex>
-            <Text fontSize="19px" color="#ccc" fontWeight="400">
-              1.328.700
-            </Text>
-            <Text fontSize="19px" color="#ccc" fontWeight="400">
-              December, 21, 2022
-            </Text>
-            <Flex gap="20px">
-              <Button variant="ghost">
-                <FaRegHeart fontSize="25px" />
-              </Button>
-              <Button variant="ghost">
-                <BsThreeDots fontSize="25px" />
-              </Button>
-            </Flex>
-          </Flex>
-          <Flex alignItems="center" justifyContent="space-between">
-            <Flex gap="20px" alignItems="center" justifyContent="center">
-              <Text fontSize="25px">3</Text>
-              <Stack
-                width="80px"
-                height="80px"
-                borderRadius="5px"
-                backgroundColor="#ccc"
-              />
-              <Flex flexDirection="column">
-                <Text fontSize="20px" fontWeight="600">
-                  Strangeville
-                </Text>
-                <Text fontSize="16px" color="#ccc" fontWeight="400">
-                  Tommy Vega
-                </Text>
-              </Flex>
-            </Flex>
-            <Text fontSize="19px" color="#ccc" fontWeight="400">
-              2.345.000
-            </Text>
-            <Text fontSize="19px" color="#ccc" fontWeight="400">
-              December, 20, 2022
-            </Text>
-            <Flex gap="20px">
-              <Button variant="ghost">
-                <FaRegHeart fontSize="25px" />
-              </Button>
-              <Button variant="ghost">
-                <BsThreeDots fontSize="25px" />
-              </Button>
-            </Flex>
-          </Flex>
-        </Stack>
-      </Stack>
+
+      {isLoading ? (
+        <Spinner marginTop="200px" width="200px" height="200px" />
+      ) : (
+        <TrendingSongsList songs={songs} />
+      )}
     </Stack>
   );
 }

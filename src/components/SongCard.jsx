@@ -1,5 +1,4 @@
 import {
-  Stack,
   Card,
   CardBody,
   CardFooter,
@@ -9,33 +8,52 @@ import {
   Image,
   Divider,
   Flex,
+  Spinner,
 } from '@chakra-ui/react';
-import { FaRegHeart } from 'react-icons/fa';
-import { BsThreeDots } from 'react-icons/bs';
-import { CiPlay1 } from 'react-icons/ci';
+import { FaHeart } from 'react-icons/fa';
+import { CiHeart } from 'react-icons/ci';
 import PropTypes from 'prop-types';
+import { selectUser } from '../redux/authSelectors';
+import { Link } from 'react-router-dom';
+import { likeSongService } from '../services/songsServices';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
-function SongCard({ author, title, cover, genre, audio }) {
+function SongCard({ id, author, title, cover, genre, audio }) {
+  const user = useSelector(selectUser);
+  const [likeLoading, setLikeLoading] = useState(false);
+  const [song, setSong] = useState([]);
+
+  function handleLikeSong() {
+    setLikeLoading(true);
+    likeSongService(id)
+      .then((song) => setSong(song))
+      .catch((err) => console.log(err))
+      .finally(() => setLikeLoading(false));
+  }
+
   return (
-    <Card backgroundColor="#3b3b3b" maxW="sm">
+    <Card backgroundColor="#3b3b3b" maxW="sm" maxH="500px">
       <CardBody display="flex" flexDirection="column" rowGap="10px">
         {cover ? (
-          <Image src={cover} alt={title} borderRadius="lg" maxW="300px" />
+          <Image src={cover} alt={title} borderRadius="lg" maxW="350px" />
         ) : (
           <Flex
             alignItems="center"
             justifyContent="center"
             backgroundColor="#000"
-            height="200px"
-            width="300px"
             color="#fff"
+            height="230px"
             fontSize="30px"
+            width="350px"
           >
             No cover
           </Flex>
         )}
 
-        <Heading>{title}</Heading>
+        <Heading as={Link} to={`/audios/${id}`}>
+          {title}
+        </Heading>
         <Text fontSize="20px" color="#ccc">
           {author}
         </Text>
@@ -43,35 +61,44 @@ function SongCard({ author, title, cover, genre, audio }) {
           Genre: {genre}
         </Text>
       </CardBody>
-      <Divider />
-      <CardFooter>
-        <Flex
-          width="100%"
-          gap="50px"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <Button variant="ghost">
-            <FaRegHeart fontSize="25px" />
-          </Button>
-          <Button variant="ghost">
-            <CiPlay1 fontSize="30px" />
-          </Button>
-          <Button variant="ghost">
-            <BsThreeDots fontSize="25px" />
-          </Button>
-        </Flex>
-      </CardFooter>
+
+      {user && (
+        <CardFooter>
+          <Divider />
+          <Flex width="100%" alignItems="center" justifyContent="center">
+            <audio src={audio} controls></audio>
+            {likeLoading ? (
+              <Spinner />
+            ) : (
+              <Button
+                leftIcon={
+                  song.isLiked ? (
+                    <FaHeart color="#D6D10F" />
+                  ) : (
+                    <CiHeart fontSize="30px" />
+                  )
+                }
+                onClick={handleLikeSong}
+                variant="ghost"
+                fontSize="25px"
+              ></Button>
+            )}
+          </Flex>
+        </CardFooter>
+      )}
     </Card>
   );
 }
 
 SongCard.propTypes = {
+  id: PropTypes.any,
   author: PropTypes.any,
   title: PropTypes.any,
   cover: PropTypes.any,
   genre: PropTypes.any,
   audio: PropTypes.any,
+  isLiked: PropTypes.any,
+  onLike: PropTypes.any,
 };
 
 export default SongCard;
