@@ -15,8 +15,8 @@ import {
   ListItem,
   Heading,
 } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
 import { followService, getUserService } from '../../services/usersServices';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../redux/authSelectors';
@@ -24,13 +24,10 @@ import Navbar from '../../components/Navbar';
 
 function ProfilePage() {
   const { userId } = useParams();
-
   const authUser = useSelector(selectUser);
-
   const isAuthUser = authUser.id === Number(userId);
 
   const [user, setUser] = useState(null);
-
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -62,29 +59,24 @@ function ProfilePage() {
             <Flex direction="row" gap={10}>
               <Avatar name={user.firstName} boxSize="15rem" />
               <Flex direction="column" justifyContent="center">
-                <Flex direction="column" justifyContent="space-between">
-                  <Stack>
-                    <Text fontSize="5xl" color="yellow">
-                      @{user.username}
-                    </Text>
-                    <Text marginEnd="10px" fontSize="2xl">
-                      {user.firstName}
-                    </Text>
-                    <Text fontSize="2xl">{user.lastName}</Text>
-                  </Stack>
-                  {!isAuthUser && (
-                    <ButtonGroup>
-                      <Button
-                        colorScheme="yellow"
-                        variant={user.isFollowing ? 'outline' : 'solid'}
-                        onClick={follow}
-                      >
-                        {user.isFollowing ? 'Unfollow' : 'Follow'}
-                      </Button>
-                    </ButtonGroup>
-                  )}
-                </Flex>
+                <Text fontSize="5xl" color="yellow">
+                  @{user.username}
+                </Text>
+                <Text marginEnd="10px" fontSize="2xl">
+                  {user.firstName} {user.lastName}
+                </Text>
                 <Text fontSize="xl">{user._count.followers} followers</Text>
+                {!isAuthUser && (
+                  <ButtonGroup>
+                    <Button
+                      colorScheme="yellow"
+                      variant={user.isFollowing ? 'outline' : 'solid'}
+                      onClick={follow}
+                    >
+                      {user.isFollowing ? 'Unfollow' : 'Follow'}
+                    </Button>
+                  </ButtonGroup>
+                )}
               </Flex>
             </Flex>
             <Tabs marginTop="35px" colorScheme="yellow">
@@ -94,7 +86,6 @@ function ProfilePage() {
                 <Tab fontSize="25px">Followers</Tab>
                 <Tab fontSize="25px">Follows</Tab>
               </TabList>
-
               <TabPanels>
                 <TabPanel>
                   <Text>Libraries</Text>
@@ -124,4 +115,5 @@ function ProfilePage() {
     </Stack>
   );
 }
+
 export default ProfilePage;
