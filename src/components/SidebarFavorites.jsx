@@ -1,6 +1,5 @@
 import { Heading, Stack, Text, Flex, Button } from '@chakra-ui/react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
-
 function SidebarFavorites() {
   return (
     <Stack>
