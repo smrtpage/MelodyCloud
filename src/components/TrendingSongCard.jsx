@@ -7,6 +7,7 @@ import { CiHeart } from 'react-icons/ci';
 import { BsThreeDots } from 'react-icons/bs';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { MdOutlineImageNotSupported } from 'react-icons/md';
 
 function TrendingSongCard({ id, title, cover, author, createdAt, likesCount }) {
   const [likeLoading, setLikeLoading] = useState(false);
@@ -25,7 +26,16 @@ function TrendingSongCard({ id, title, cover, author, createdAt, likesCount }) {
         <Text width="50px" fontSize="25px">
           {id}
         </Text>
-        <Image width="100px" height="80px" borderRadius="5px" src={cover} />
+        {cover ? (
+          <Image width="100px" height="80px" borderRadius="5px" src={cover} />
+        ) : (
+          <MdOutlineImageNotSupported
+            fontSize="100px"
+            width="100px"
+            height="80px"
+          />
+        )}
+
         <Flex as={Link} to={`/audios/${id}`} flexDirection="column">
           <Text width="150px" fontSize="20px" fontWeight="600">
             {title}
