@@ -33,10 +33,10 @@ function SongCard({ id, author, title, cover, genre, audio }) {
   }
 
   return (
-    <Card backgroundColor="#3b3b3b" maxW="sm" maxH="500px">
+    <Card backgroundColor="#3b3b3b" maxW="sm">
       <CardBody display="flex" flexDirection="column" rowGap="10px">
         {cover ? (
-          <Image src={cover} alt={title} borderRadius="lg" maxW="350px" />
+          <Image src={cover} alt={title} borderRadius="lg" />
         ) : (
           <Flex
             alignItems="center"

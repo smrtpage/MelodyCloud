@@ -7,3 +7,7 @@ export function getUserService(userId) {
 export function followService(userId) {
   return axios.post(`/users/${userId}/follow`);
 }
+
+export function getUserLikesService(userId) {
+  return axios.get(`/users/${userId}/likes`);
+}
