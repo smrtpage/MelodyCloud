@@ -19,7 +19,7 @@ import { likeSongService } from '../services/songsServices';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
-function SongCard({ id, author, title, cover, genre, audio }) {
+function SongCard({ id, author, title, cover, genre, audio, isLiked }) {
   const user = useSelector(selectUser);
   const [likeLoading, setLikeLoading] = useState(false);
   const [song, setSong] = useState([]);

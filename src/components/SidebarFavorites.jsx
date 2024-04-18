@@ -5,10 +5,16 @@ import { selectUser } from '../redux/authSelectors';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { MdOutlineImageNotSupported } from 'react-icons/md';
+import { Link } from 'react-router-dom';
 
 function SidebarFavorites() {
   const user = useSelector(selectUser);
   const [likedSongs, setLikedSongs] = useState([]);
+
+  if (likedSongs.length >= 8) {
+    likedSongs.length = 8;
+  }
+
   useEffect(() => {
     getUserLikesService(user.id).then((data) => setLikedSongs(data.items));
   }, [user.id]);
@@ -35,7 +41,9 @@ function SidebarFavorites() {
             My Favorites
           </Heading>
 
-          <Button variant="ghost">See All</Button>
+          <Button as={Link} to="/favorites" variant="ghost">
+            See All
+          </Button>
         </Stack>
 
         <Flex

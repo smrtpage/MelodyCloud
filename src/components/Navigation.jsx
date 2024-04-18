@@ -40,7 +40,7 @@ function Navigation() {
             <Text color="gray" justifyContent="flex-start" marginBottom="25px">
               Your Library
             </Text>
-            <LibrariesButton text="Favourite" to="/" />
+            <LibrariesButton text="Favourite" to="/favorites" />
             <LibrariesButton text="Recently Played" to="/" />
             <LibrariesButton text="Friends" to="/" />
           </Flex>

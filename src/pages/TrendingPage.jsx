@@ -6,12 +6,38 @@ import { selectUser } from '../redux/authSelectors';
 import { getAllSongsService } from '../services/songsServices';
 import { useEffect, useState } from 'react';
 import TrendingSongsList from '../components/TrendingSongsList';
+import { useRef } from 'react';
 
 function TrendingPage() {
   const user = useSelector(selectUser);
   const navigate = useNavigate();
   const [songs, setSongs] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [currentAudio, setCurrentAudio] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef(null);
+
+  const handlePlayAudio = (audioUrl) => {
+    const audioEl = audioRef.current;
+    if (currentAudio === audioUrl) {
+      if (isPlaying) {
+        audioEl.pause();
+      } else {
+        audioEl.play();
+      }
+      setIsPlaying(!isPlaying);
+    } else {
+      setCurrentAudio(audioUrl);
+      setIsPlaying(true);
+      setTimeout(() => audioEl.play(), 100);
+    }
+  };
+
+  useEffect(() => {
+    if (isPlaying && audioRef.current) {
+      audioRef.current.play();
+    }
+  }, [isPlaying]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -176,30 +202,44 @@ function TrendingPage() {
       {isLoading ? (
         <Spinner marginTop="200px" width="200px" height="200px" />
       ) : (
-        <TrendingSongsList songs={songs} />
+        <TrendingSongsList
+          songs={songs}
+          onPlayAudio={handlePlayAudio}
+          currentAudio={currentAudio}
+          isPlaying={isPlaying}
+        />
       )}
+
+      <audio
+        ref={audioRef}
+        src={currentAudio}
+        onEnded={() => setIsPlaying(false)}
+        onLoadedMetadata={() => {
+          if (isPlaying) audioRef.current.play();
+        }}
+      >
+        Your browser does not support the audio element.
+      </audio>
     </Stack>
   );
 }
 export default TrendingPage;
 
-function storeLastListenedMusic(music) {
-  localStorage.setItem('lastListenedMusic', music);
-}
+// function storeLastListenedMusic(music) {
+//   localStorage.setItem('lastListenedMusic', music);
+// }
 
+// function getLastListenedMusic() {
+//   return localStorage.getItem('lastListenedMusic');
+// }
 
-function getLastListenedMusic() {
-  return localStorage.getItem('lastListenedMusic');
-}
+// const lastListenedMusic = getLastListenedMusic();
+// if (lastListenedMusic) {
+//   console.log(`Last listened music: ${lastListenedMusic}`);
+// } else {
+//   console.log('No music listened recently.');
+// }
 
-
-const lastListenedMusic = getLastListenedMusic();
-if (lastListenedMusic) {
-  console.log(`Last listened music: ${lastListenedMusic}`);
-} else {
-  console.log('No music listened recently.');
-}
-
-const newMusic = 'Song Title - Artist';
-storeLastListenedMusic(newMusic);
-console.log('Updated last listened music.');
+// const newMusic = 'Song Title - Artist';
+// storeLastListenedMusic(newMusic);
+// console.log('Updated last listened music.');

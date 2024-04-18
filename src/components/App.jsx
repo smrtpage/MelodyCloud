@@ -16,6 +16,7 @@ import { loginAction, logoutAction } from '../redux/authActions';
 import { verifyService } from '../services/authServices';
 import PrivateRoute from './PrivateRoute';
 import CreateSongPage from '../pages/songs/CreateSongPage';
+import FavoritesPage from '../pages/songs/FavoritesPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -52,6 +53,8 @@ function App() {
         path="/listening-history"
         element={<ListeningHistoryPage />}
       ></Route>
+
+      <Route path="/favorites" element={<FavoritesPage />}></Route>
 
       <Route element={<RootLayout />}>
         <Route path="/users/:userId" element={<ProfilePage />} />
