@@ -11,3 +11,7 @@ export function followService(userId) {
 export function getUserLikesService(userId) {
   return axios.get(`/users/${userId}/likes`);
 }
+
+export function userLikedSongs(userId) {
+  return axios.get(`/users/${userId}/likes`);
+}
