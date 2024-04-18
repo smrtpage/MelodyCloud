@@ -15,20 +15,28 @@ import {
   ListItem,
   Heading,
 } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { followService, getUserService } from '../../services/usersServices';
+import { useEffect, useState, useMemo } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import {
+  followService,
+  getUserService,
+  userLikedSongs,
+} from '../../services/usersServices';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../redux/authSelectors';
 import Navbar from '../../components/Navbar';
+import LikedSongsList from '../../components/Profile/LikedSongsList';
 
-function ProfilePage() {
+const ProfilePage = () => {
   const { userId } = useParams();
   const authUser = useSelector(selectUser);
   const isAuthUser = authUser.id === Number(userId);
 
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [followingUsers, setFollowingUsers] = useState([]);
+  const [followersUsers, setFollowersUsers] = useState([]);
+  const [likedSongs, setLikedSongs] = useState([]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -37,12 +45,86 @@ function ProfilePage() {
       .finally(() => setIsLoading(false));
   }, [userId]);
 
-  function follow() {
+  const handleFollow = () => {
     followService(userId).then((newUser) => setUser(newUser));
-  }
+  };
+
+  useEffect(() => {
+    if (user) {
+      Promise.all(user.following.map((item) => getUserService(item.id)))
+        .then((data) => setFollowingUsers(data))
+        .finally(() => setIsLoading(false));
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (user) {
+      Promise.all(user.followers.map((item) => getUserService(item.id)))
+        .then((data) => setFollowersUsers(data))
+        .finally(() => setIsLoading(false));
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (user) {
+      userLikedSongs(userId).then((data) => setLikedSongs(data.items));
+    }
+  }, [user, userId]);
+
+  console.log(likedSongs);
+
+  const createFollowingListItems = useMemo(() => {
+    return followingUsers.map((item, index) => (
+      <ListItem marginTop="25px" key={index}>
+        <Stack
+          as={Link}
+          to={`/users/${item.id}`}
+          border="1px"
+          padding="25px"
+          borderRadius="50px"
+          _hover={{
+            color: 'yellow',
+            backgroundColor: '#2B2B2B',
+            transition: '0.5s ',
+          }}
+        >
+          <Heading>{item.username}</Heading>
+          <Text>
+            {item.firstName} {item.lastName}
+          </Text>
+          <Text>Followers: {item._count.followers}</Text>
+        </Stack>
+      </ListItem>
+    ));
+  }, [followingUsers]);
+
+  const createFollowersListItems = useMemo(() => {
+    return followersUsers.map((item, index) => (
+      <ListItem marginTop="25px" key={index}>
+        <Stack
+          as={Link}
+          to={`/users/${item.id}`}
+          border="1px"
+          padding="25px"
+          borderRadius="50px"
+          _hover={{
+            color: 'yellow',
+            backgroundColor: '#2B2B2B',
+            transition: '0.5s ',
+          }}
+        >
+          <Heading>{item.username}</Heading>
+          <Text>
+            {item.firstName} {item.lastName}
+          </Text>
+          <Text>Followers: {item._count.followers}</Text>
+        </Stack>
+      </ListItem>
+    ));
+  }, [followersUsers]);
 
   return (
-    <Stack padding="30px">
+    <Stack>
       <Navbar />
       {isLoading ? (
         <Flex justify="center" align="center" minHeight="200px">
@@ -52,7 +134,6 @@ function ProfilePage() {
         user && (
           <Flex
             marginTop="60px"
-            marginStart="40px"
             direction="column"
             justifyContent="space-between"
           >
@@ -71,7 +152,7 @@ function ProfilePage() {
                     <Button
                       colorScheme="yellow"
                       variant={user.isFollowing ? 'outline' : 'solid'}
-                      onClick={follow}
+                      onClick={handleFollow}
                     >
                       {user.isFollowing ? 'Unfollow' : 'Follow'}
                     </Button>
@@ -81,31 +162,21 @@ function ProfilePage() {
             </Flex>
             <Tabs marginTop="35px" colorScheme="yellow">
               <TabList>
-                <Tab fontSize="25px">Libraries</Tab>
                 <Tab fontSize="25px">Favourites</Tab>
                 <Tab fontSize="25px">Followers</Tab>
                 <Tab fontSize="25px">Follows</Tab>
               </TabList>
               <TabPanels>
                 <TabPanel>
-                  <Text>Libraries</Text>
+                  <Text>
+                    <LikedSongsList songs={likedSongs} />
+                  </Text>
                 </TabPanel>
                 <TabPanel>
-                  <Text>Favourites</Text>
+                  <List>{createFollowersListItems}</List>
                 </TabPanel>
                 <TabPanel>
-                  <List>
-                    <ListItem>
-                      <Stack border="1px" padding="25px" borderRadius="50px">
-                        <Heading>user</Heading>
-                        <Text>2.345.000</Text>
-                        <Text>December, 20, 2022</Text>
-                      </Stack>
-                    </ListItem>
-                  </List>
-                </TabPanel>
-                <TabPanel>
-                  <Text>Follows</Text>
+                  <List>{createFollowingListItems}</List>
                 </TabPanel>
               </TabPanels>
             </Tabs>
@@ -114,6 +185,6 @@ function ProfilePage() {
       )}
     </Stack>
   );
-}
+};
 
 export default ProfilePage;
