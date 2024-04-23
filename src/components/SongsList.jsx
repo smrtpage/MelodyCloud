@@ -4,7 +4,7 @@ import SongCard from './SongCard';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../redux/authSelectors';
 
-function SongsList({ songs, onChangeLike }) {
+function SongsList({ songs }) {
   const user = useSelector(selectUser);
   return (
     <Stack display="flex" alignItems="center" justifyContent="center">
@@ -39,7 +39,6 @@ function SongsList({ songs, onChangeLike }) {
             audio={song.audio}
             cover={song.cover}
             id={song.id}
-            onChangeLike={onChangeLike}
           />
         ))}
       </Flex>
@@ -50,6 +49,5 @@ function SongsList({ songs, onChangeLike }) {
 SongsList.propTypes = {
   songs: PropTypes.array.isRequired,
   onLike: PropTypes.any,
-  onChangeLike: PropTypes.any,
 };
 export default SongsList;

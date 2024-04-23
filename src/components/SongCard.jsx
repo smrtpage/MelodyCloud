@@ -16,8 +16,9 @@ import PropTypes from 'prop-types';
 import { selectUser } from '../redux/authSelectors';
 import { Link } from 'react-router-dom';
 import { likeSongService } from '../services/songsServices';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { getSongDetailsService } from '../services/songsServices';
 
 function SongCard({
   id,
@@ -28,18 +29,27 @@ function SongCard({
   audio,
   isLiked,
   authorId,
-  onChangeLike,
 }) {
   const user = useSelector(selectUser);
   const [likeLoading, setLikeLoading] = useState(false);
   const [song, setSong] = useState([]);
+
+  const [likeSong, setLikeSong] = useState(false);
+
+  useEffect(() => {
+    console.log('Effect in songCard');
+    getSongDetailsService(id)
+      .then((data) => setSong(data))
+      .catch((err) => console.log(err));
+  }, [likeSong, id]);
 
   async function handleLikeSong() {
     setLikeLoading(true);
     try {
       const response = await likeSongService(id);
       setSong(response);
-      onChangeLike(!isLiked);
+      console.log(isLiked);
+      setLikeSong(!likeSong);
     } catch (err) {
       console.log(err);
     }
@@ -87,7 +97,7 @@ function SongCard({
             ) : (
               <Button
                 leftIcon={
-                  isLiked ? (
+                  song.isLiked ? (
                     <FaHeart color="#D6D10F" />
                   ) : (
                     <CiHeart fontSize="30px" />

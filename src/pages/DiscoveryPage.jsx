@@ -9,7 +9,6 @@ function DiscoveryPage() {
   const [songs, setSongs] = useState([]);
   const [query, setQuery] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [likeSong, setLikeSong] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
@@ -18,15 +17,11 @@ function DiscoveryPage() {
         .then((data) => setSongs(data.items))
         .catch((err) => console.log(err));
     }
-    getAllSongsService({ q: query, page: 1, perPage: 12, genre: 'ROCK' })
+    getAllSongsService({ q: query, perPage: 12 })
       .then((data) => setSongs(data.items))
       .catch((err) => console.log(err))
       .finally(() => setIsLoading(false));
-  }, [query, likeSong]);
-
-  function changeLike(like) {
-    setLikeSong(like);
-  }
+  }, [query]);
 
   function search(newQuery) {
     setQuery(newQuery);
@@ -45,7 +40,7 @@ function DiscoveryPage() {
       {isLoading ? (
         <Spinner marginTop="200px" width="200px" height="200px" />
       ) : (
-        <SongsList songs={songs} onChangeLike={changeLike} />
+        <SongsList songs={songs} />
       )}
 
       {songs.length === 0 && (

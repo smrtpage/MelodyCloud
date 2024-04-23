@@ -1,5 +1,5 @@
 import { Flex, Text, Image, Button, Spinner, Box } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaHeart } from 'react-icons/fa';
 import { CiHeart } from 'react-icons/ci';
@@ -9,6 +9,7 @@ import { formatSongDate } from '../utils/formatSongDate';
 import { likeSongService } from '../services/songsServices';
 import { MdOutlineImageNotSupported } from 'react-icons/md';
 import PropTypes from 'prop-types';
+import { getSongDetailsService } from '../services/songsServices';
 
 function TrendingSongCard({
   id,
@@ -25,14 +26,27 @@ function TrendingSongCard({
   const [likeLoading, setLikeLoading] = useState(false);
   const [song, setSong] = useState([]);
 
-  function handleLikeSong() {
-    setLikeLoading(true);
-    likeSongService(id)
-      .then((song) => setSong(song))
-      .catch((err) => console.log(err))
-      .finally(() => setLikeLoading(false));
-  }
+  const [likeSong, setLikeSong] = useState(false);
 
+  useEffect(() => {
+    console.log('Effect in songCard');
+    getSongDetailsService(id)
+      .then((data) => setSong(data))
+      .catch((err) => console.log(err));
+  }, [likeSong, id]);
+
+  async function handleLikeSong() {
+    setLikeLoading(true);
+    try {
+      const response = await likeSongService(id);
+      setSong(response);
+      setLikeSong(!likeSong);
+    } catch (err) {
+      console.log(err);
+    }
+
+    setLikeLoading(false);
+  }
   return (
     <Flex key={id} alignItems="center" justifyContent="space-between">
       <Flex gap="20px" alignItems="center" justifyContent="center">
