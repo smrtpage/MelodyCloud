@@ -18,6 +18,7 @@ function TrendingSongsList({ songs, onPlayAudio, currentAudio, isPlaying }) {
           <TrendingSongCard
             key={song.id}
             audio={song.audio}
+            authorId={song.user.id}
             id={song.id}
             title={song.title}
             createdAt={song.createdAt}

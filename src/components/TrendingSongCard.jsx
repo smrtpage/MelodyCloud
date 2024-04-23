@@ -16,6 +16,7 @@ function TrendingSongCard({
   cover,
   audio,
   author,
+  authorId,
   createdAt,
   likesCount,
   onPlayAudio,
@@ -76,11 +77,24 @@ function TrendingSongCard({
           </Box>
         </Box>
 
-        <Flex as={Link} to={`/audios/${id}`} flexDirection="column">
-          <Text width="150px" fontSize="20px" fontWeight="600">
+        <Flex flexDirection="column">
+          <Text
+            as={Link}
+            to={`/audios/${id}`}
+            width="150px"
+            fontSize="20px"
+            fontWeight="600"
+          >
             {title}
           </Text>
-          <Text width="150px" fontSize="16px" color="#ccc" fontWeight="400">
+          <Text
+            as={Link}
+            to={`/users/${authorId}`}
+            width="150px"
+            fontSize="16px"
+            color="#ccc"
+            fontWeight="400"
+          >
             {author}
           </Text>
         </Flex>
@@ -129,6 +143,7 @@ TrendingSongCard.propTypes = {
   onPlayAudio: PropTypes.any,
   audio: PropTypes.any,
   isPlaying: PropTypes.any,
+  authorId: PropTypes.any,
 };
 
 export default TrendingSongCard;

@@ -15,7 +15,7 @@ import {
   ListItem,
   Heading,
 } from '@chakra-ui/react';
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import {
   followService,
@@ -37,6 +37,31 @@ const ProfilePage = () => {
   const [followingUsers, setFollowingUsers] = useState([]);
   const [followersUsers, setFollowersUsers] = useState([]);
   const [likedSongs, setLikedSongs] = useState([]);
+  const [currentAudio, setCurrentAudio] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef(null);
+
+  const handlePlayAudio = (audioUrl) => {
+    const audioEl = audioRef.current;
+    if (currentAudio === audioUrl) {
+      if (isPlaying) {
+        audioEl.pause();
+      } else {
+        audioEl.play();
+      }
+      setIsPlaying(!isPlaying);
+    } else {
+      setCurrentAudio(audioUrl);
+      setIsPlaying(true);
+      setTimeout(() => audioEl.play(), 100);
+    }
+  };
+
+  useEffect(() => {
+    if (isPlaying && audioRef.current) {
+      audioRef.current.play();
+    }
+  }, [isPlaying]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -169,7 +194,12 @@ const ProfilePage = () => {
               <TabPanels>
                 <TabPanel>
                   <Text>
-                    <LikedSongsList songs={likedSongs} />
+                    <LikedSongsList
+                      onPlayAudio={handlePlayAudio}
+                      currentAudio={currentAudio}
+                      isPlaying={isPlaying}
+                      songs={likedSongs}
+                    />
                   </Text>
                 </TabPanel>
                 <TabPanel>
@@ -183,6 +213,16 @@ const ProfilePage = () => {
           </Flex>
         )
       )}
+      <audio
+        ref={audioRef}
+        src={currentAudio}
+        onEnded={() => setIsPlaying(false)}
+        onLoadedMetadata={() => {
+          if (isPlaying) audioRef.current.play();
+        }}
+      >
+        Your browser does not support the audio element.
+      </audio>
     </Stack>
   );
 };

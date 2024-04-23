@@ -2,7 +2,7 @@ import LikedSongCard from '../Profile/LikedSongCard';
 import { Stack } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 
-function LikedSongsList({ songs }) {
+function LikedSongsList({ songs, onPlayAudio, currentAudio, isPlaying }) {
   return (
     <Stack>
       <Stack
@@ -18,8 +18,11 @@ function LikedSongsList({ songs }) {
             title={song.title}
             createdAt={song.createdAt}
             author={song.user.username}
+            audio={song.audio}
             cover={song.cover}
             likesCount={song._count.likedBy}
+            onPlayAudio={onPlayAudio}
+            isPlaying={isPlaying && currentAudio === song.audio}
           />
         ))}
       </Stack>
@@ -28,5 +31,8 @@ function LikedSongsList({ songs }) {
 }
 LikedSongsList.propTypes = {
   songs: PropTypes.any,
+  onPlayAudio: PropTypes.any,
+  currentAudio: PropTypes.any,
+  isPlaying: PropTypes.any,
 };
 export default LikedSongsList;

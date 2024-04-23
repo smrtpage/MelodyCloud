@@ -19,17 +19,32 @@ import { likeSongService } from '../services/songsServices';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
-function SongCard({ id, author, title, cover, genre, audio, isLiked }) {
+function SongCard({
+  id,
+  author,
+  title,
+  cover,
+  genre,
+  audio,
+  isLiked,
+  authorId,
+  onChangeLike,
+}) {
   const user = useSelector(selectUser);
   const [likeLoading, setLikeLoading] = useState(false);
   const [song, setSong] = useState([]);
 
-  function handleLikeSong() {
+  async function handleLikeSong() {
     setLikeLoading(true);
-    likeSongService(id)
-      .then((song) => setSong(song))
-      .catch((err) => console.log(err))
-      .finally(() => setLikeLoading(false));
+    try {
+      const response = await likeSongService(id);
+      setSong(response);
+      onChangeLike(!isLiked);
+    } catch (err) {
+      console.log(err);
+    }
+
+    setLikeLoading(false);
   }
 
   return (
@@ -54,7 +69,7 @@ function SongCard({ id, author, title, cover, genre, audio, isLiked }) {
         <Heading as={Link} to={`/audios/${id}`}>
           {title}
         </Heading>
-        <Text fontSize="20px" color="#ccc">
+        <Text as={Link} to={`/users/${authorId}`} fontSize="20px" color="#ccc">
           {author}
         </Text>
         <Text fontSize="20px" color="#ccc">
@@ -72,7 +87,7 @@ function SongCard({ id, author, title, cover, genre, audio, isLiked }) {
             ) : (
               <Button
                 leftIcon={
-                  song.isLiked ? (
+                  isLiked ? (
                     <FaHeart color="#D6D10F" />
                   ) : (
                     <CiHeart fontSize="30px" />
@@ -98,6 +113,7 @@ SongCard.propTypes = {
   genre: PropTypes.any,
   audio: PropTypes.any,
   isLiked: PropTypes.any,
+  authorId: PropTypes.any,
   onLike: PropTypes.any,
 };
 
